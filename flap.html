@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>horrible flappy bird remake why would you play this</title>
+</head>
+<body>
+<canvas id="playspace" style="width:100%;height:100%"></canvas>
+
+<script>
+
+// flappy bird remake by yours truly AJB
+
+const playspace = document.getElementById("playspace");
+const ctx = playspace.getContext("2d");
+
+const textSize = 15;
+
+var velocity = 0;
+
+const loseMessage = "you lost, click to restart"; //custom msg
+
+var gamePlaying = true;
+
+var playerPos = playspace.height * 0.4; //starting position for the player
+
+
+
+ctx.font = textSize.toString().concat("px cursive");
+playspace.addEventListener("click", function() {
+  velocity = 1;
+  
+  if(gamePlaying === false){
+  playerPos = playspace.height * 0.4
+  gamePlaying = true;
+  }
+})
+
+setInterval(function() {
+
+  if (gamePlaying === true) {
+
+    velocity = velocity - 0.01;
+
+
+    playerPos = playerPos - velocity;
+
+    ctx.fillStyle = "rgb(102,102,255)";
+
+    ctx.fillRect(0, 0, playspace.width, playspace.height);
+
+    ctx.fillStyle = "rgb(255,255,153)";
+
+    ctx.fillRect(15, playerPos, 20, 20);
+    
+    if(playerPos > playspace.height){
+    gamePlaying = false;
+    }
+
+  } else {
+  
+  	ctx.fillStyle = "rgb(102,102,255)"
+    
+    ctx.fillRect(0,0,playspace.width,playspace.height);
+    ctx.fillStyle = "white";
+
+    ctx.fillText(loseMessage, playspace.width * 0.25, playspace.height * 0.5);
+  }
+}, 0);
+
+</script>
+
+</body>
+</html>
