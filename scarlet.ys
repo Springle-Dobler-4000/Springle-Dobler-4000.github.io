@@ -1,0 +1,41 @@
+-Screen resolution is 300x255 (DELETE THESE COMMENTS!!!)
+-MemoryChip attached will have different images, using variables T-Y (6 RAM slots, 3 upper state, 3 lower state) 
+-CommLink on channel 9 polysilicon, Seeker on channel 8, Prospector on channel 7, CMOS on channel 6? (For Seeker)
+
+
+A=Buffer'9
+B=0
+C=Buffer'8
+L= ;
+removeA'0
+ifA[Scarlet 
+sweepA'Scarlet 
+ifA[seek 
+sweepA'seek 
+signalA'8
+printC
+end
+-indentation xD
+ifA[listen
+printOkay, going incognito...
+wait1
+printProgram ended.
+B=1
+end
+-indentation xD
+ifA[stop listening
+B=0
+printStopped listening, conversation logs are on the MemoryChip!
+wait1
+print 
+end
+-indentation xD
+end
+
+ifA]Scarlet
+ifB=1
+insertL'A
+else
+writechipL
+end
+end
