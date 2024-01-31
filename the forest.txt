@@ -1,0 +1,41 @@
+game.ReplicatedStorage.Recipes (class ModuleScript)::::::::
+module = {
+["Wall"] = {"Wood", "Wood"},
+["Floor"] = {"Wood", "Wood"},
+["Condensed Filth"] = {"Metal","Wood"}
+}
+for i,v in pairs(module) do
+table.sort(v) --this sorts the recipe list in alphabetical order, which is important
+end
+return module
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+Craft Tool
+  L Script
+  L LocalScript
+  L RemoteEvent
+
+["Craft Tool"].Script::::::::::
+
+local remote = script.Parent:WaitForChild("RemoteEvent")
+local recipes = require(game.ReplicatedStorage.Recipes)
+
+
+remote.OnServerEvent:Connect(function(plr,stuffs)
+local foundRecipes = {}
+table.sort(stuffs) --sorts the ingredients into alphabetical order
+for i,v in pairs(recipes) do
+if stuffs == v then --if the ingredients we have are equal to the ingredients of a recipe
+foundRecipes[#foundRecipes+1] = i --append the NAME of a found recipe to the foundRecipes table
+end
+end
+
+if #foundRecipes > 1 then --not finished with this yet xDDD
+print("Found multiple recipes xDDDDD")
+else
+print("you crafted " ..foundRecipes[1])
+end
+end)
+
+:::::::::::::::::::::::::::::::
