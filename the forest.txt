@@ -32,9 +32,15 @@ end
 end
 
 if #foundRecipes > 1 then --not finished with this yet xDDD
-print("Found multiple recipes xDDDDD")
-else
+print("Found multiple recipes xDDDDD") --i can't gui design rn so make this open a menu to select a recipe
+elseif #foundRecipes == 1
 print("you crafted " ..foundRecipes[1])
+for i,v in ipairs(stuffs) do
+v:Destroy()
+end
+game.ReplicatedStorage:FindFirstChild(foundRecipes[1]):Clone().Parent = plr.Backpack
+elseif #foundRecipes == 0 then
+print("try again stupid")
 end
 end)
 
