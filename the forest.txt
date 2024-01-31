@@ -22,11 +22,12 @@ local remote = script.Parent:WaitForChild("RemoteEvent")
 local recipes = require(game.ReplicatedStorage.Recipes)
 
 
-remote.OnServerEvent:Connect(function(plr,stuffs)
+remote.OnServerEvent:Connect(function(plr,stuffs,act) --stuffs: {["ingredients"] = {ingredient names}, ["ingredientInstances"] = {actual ingredient tools} ["recipe"] = "recipe selected from menu if applicable"}
+if act == "ingredientsCraft" then
 local foundRecipes = {}
-table.sort(stuffs) --sorts the ingredients into alphabetical order
+table.sort(stuffs.ingredients) --sorts the ingredients into alphabetical order
 for i,v in pairs(recipes) do
-if stuffs == v then --if the ingredients we have are equal to the ingredients of a recipe
+if stuffs.ingredients == v then --if the ingredients we have are equal to the ingredients of a recipe
 foundRecipes[#foundRecipes+1] = i --append the NAME of a found recipe to the foundRecipes table
 end
 end
@@ -35,12 +36,26 @@ if #foundRecipes > 1 then --not finished with this yet xDDD
 print("Found multiple recipes xDDDDD") --i can't gui design rn so make this open a menu to select a recipe
 elseif #foundRecipes == 1
 print("you crafted " ..foundRecipes[1])
-for i,v in ipairs(stuffs) do
+for i,v in ipairs(stuffs.ingredientInstances) do
 v:Destroy()
 end
 game.ReplicatedStorage:FindFirstChild(foundRecipes[1]):Clone().Parent = plr.Backpack
 elseif #foundRecipes == 0 then
 print("try again stupid")
+end
+elseif act == "recipeCraft" then
+table.sort(stuffs.ingredients)
+if recipes[stuffs.recipe] then
+if stuffs.ingredients == recipes[stuffs.recipe] then
+game.ReplicatedStorage.Tools:FindFirstChild(stuffs.recipe):Clone().Parent = plr.Backpack
+for i,v in ipairs(stuffs.ingredientInstances) do
+v:Destroy()
+end
+else
+print("try again moron")
+end
+end
+end
 end
 end)
 
